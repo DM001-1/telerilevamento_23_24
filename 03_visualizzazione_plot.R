@@ -48,11 +48,17 @@ plot11 <- plot(stacksent[[4]], col=clch)
 im.plotRGB(stacksent, 3, 2, 1) 
 im.plotRGB(stacksent, 4, 2, 1)
 # Esercizio: crea una trama con le immagini a colori naturali e quelle a falsi colori una accanto all'altra
+# Che strato è il NIR? Il NIR è rosso poiché la vegetazione è rossa
+# più il rosso è scuro più la vegetazione è sana
+# NIR = 1
+# red = 2
+# green = 3
+
 par(mfrow=c(1,2))
 im.plotRGB(stacksent, 3, 2, 1)
 im.plotRGB(stacksent, 4, 2, 1)
 dev.off() #per riuscire a togliere qualunque immagine
-im.plotRGB(stacksent, 4, 3, 2) #sovrapporre i plot naturale e rosso
+im.plotRGB(stacksent, 4, 3, 2) #sovrapporre i plot nir e rosso
 #
 par(mfrow=c(1,3))
 im.plotRGB(stacksent, 3, 2, 1)
@@ -61,9 +67,9 @@ im.plotRGB(stacksent, 4, 3, 2)
 
 dev.off()
 
-# nir on green
+# nir sopra il verde
 im.plotRGB(stacksent, 3, 4, 2)
-# nir on blue
+# nir sopra il blu
 im.plotRGB(stacksent, 3, 2, 4)
 #esercizio: mettere assieme le 4 immagini 
 par(mfrow=c(2,2))
