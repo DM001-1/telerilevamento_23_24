@@ -1,0 +1,12 @@
+# VARIABILITY
+
+# Load the required packages
+library(raster)
+library(ggplot2)
+library(patchwork)
+library(viridis)
+
+# Directory in Windows
+setwd("C:/lab/data")
+#scarica immagine da Copernico Sentinella 2 https://browser.dataspace.copernicus.eu/?zoom=11&lat=45.36638&lng=12.49832&themeId=DEFAULT-THEME&visualizationUrl=U2FsdGVkX1%2FyB2npWJseasQuKOJH6rxes6VysldjAh30quN8IW7XapNOenRxUeXiHTMFQZWNfIAV9pbrI%2Fo261bWHk14yX8vEA6%2B%2F2oWTUJ22HzvnP2lgEBhZ0p3ofyJ&datasetId=S2_L2A_CDAS&fromTime=2023-02-07T00%3A00%3A00.000Z&toTime=2023-02-07T23%3A59%3A59.999Z&layerId=1_TRUE_COLOR&demSource3D=%22MAPZEN%22&cloudCoverage=10&dateMode=SINGLE
+#delta del po
