@@ -1,10 +1,11 @@
-#sito Overleaf registrati e sciegli un modello (tesi/articolo/libro/etc)
-#esempio_questa tipoligia di script inizia sempre con \ e raccolgono le funzioni nelle parentesi graffe
-#mentre le parentesi quadre sono utilizzate quando si vuole modificare la struttura
-#usepackage servono per pacchetti aggiuntivi 
+%sito Overleaf registrati e sciegli un modello (tesi/articolo/libro/etc)
+%esempio_questa tipoligia di script inizia sempre con \ e raccolgono le funzioni nelle parentesi graffe
+%mentre le parentesi quadre sono utilizzate quando si vuole modificare la struttura
+%usepackage servono per pacchetti aggiuntivi 
 % modelli per presentazioni : https://mpetroff.net/files/beamer-theme-matrix/
+% pagina per funzioni dimensione testo: https://www.javatpoint.com/latex-fonts-size-and-styles
 
-#PRESENTAZIONE NB: per R inserire un commento si utilizza il # mentre per LaTex si usa %
+%PRESENTAZIONE NB: per R inserire un commento si utilizza il # mentre per LaTex si usa %
 
 \documentclass{beamer}  #BEAMER è un pezzo di softuer che serve proprio per costruire delle presentazioni
 \usepackage{graphicx} % Required for inserting images
@@ -25,6 +26,14 @@
 % inizio della presentazione
 \begin{document}
 \maketitle
+%caratteristica di rendere chiaro la struttura non in uso
+\AtBeginSection[]
+{
+\begin{frame}
+\frametitle{Outline}
+\tableofcontents[currentsection]
+\end{frame}
+}
 
 %usiamo sempre le sezioni per dividere gli argomenti in modo tale che risulti sempr eben ordinata:
 \section{Introduction}
@@ -44,6 +53,15 @@ Ecology is based on the following frameworks:
 %esempio: \item Biology
 %         \item \pause Geology
 
+%se vogliamo inserire delle frasi con parole in grassetto:
+\begin{frame}{Elenchi puntati}
+Ecology is based on the following frameworks:
+\begin{itemize}
+    \item Biology prima frase inserire parola in \textbf{grassetto}
+    \item \pause Geology seconda frase inserire parola in \textbf{grassetto}
+\end{itemize}    
+\end{frame}
+
 \section{Metodi}
 \begin{frame}{Usiamo una formula} %ricordiamoci di latew wikibook
 \begin{equation}
@@ -54,12 +72,19 @@ Ecology is based on the following frameworks:
 %con la funzione \times inserisco la moltiplicazione
 % quindi il risultato sarà: 
 E_c = \frac{1}{2} \times m \times v^2
-
+\end{equation}
+\label{eq.cinetic} %per fare collegamento...
+\end{frame}
 
 \section{Risulati}
 \begin{frame}{Grafico dei risultati} % vogliamo inserire un grafico salvato cul nostro pc
   \includegraphics[width = \textwidth]{Graphical-representation-Butterfly-effect.png}
   % width = \textwidth è necessario per rendere l'immagine grande come la schermata testo; se prima della funzione inserisco 0.7 ad             esempio questa si rimpicciolisce: width = 0.7\textwidth
   %per centrarla prima della funzione |begin(frame) inserisci la funzione \cettering
-  
+
+%...voglio inserire il collegamento alla formula
+\begin{frame}{Discussione}
+Come abbiamo visto nell'equazione \ref{eq.cinetic}.  %così mi scriverà il numero e lo aggiornerà se cambia  
+\end{frame}
+
 \end{document}
