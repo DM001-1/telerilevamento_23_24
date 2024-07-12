@@ -1,0 +1,197 @@
+install.packages("ggplot2")
+install.packages("patchwork")
+install.packages("raster")
+install.packages("viridis")
+install.packages("terra")
+install.packages("devtools")
+install.packages("devtools", dependencies = TRUE)
+install_github ("ducciorocchini/imageRy", force = TRUE)
+install.packages("tidyverse")
+install.packages("sf")
+install.packages("tidyr")
+install.packages("sp")
+install.packages("dplyr")
+library(terra)
+library(devtools)
+library(raster)
+library(ggplot2)
+library(patchwork)
+library(viridis)
+library(imageRy)
+library(tidyverse)
+library(sf)
+library(tidyr)
+library(sp)
+library(dplyr)
+#setwd("C:/Users/Tecnico.3/Desktop/anna/Nuova cartella/GitHub/T_24")
+my_im_list <- list.files("C:/Users/Tecnico.3/Desktop/anna/Nuova cartella/GitHub/T_24")
+my_im_list
+img_list_b1 <- list.files(pattern = "18.08_Calamento_tif_colors.tif")
+import_b1 <- lapply(img_list_b1, raster) 
+import_b1
+img_18_raw <- stack(import_b1)
+img_18_raw
+plot(img_18_raw)
+
+img_list_b2 <- list.files(pattern = "19.08_Calamento_tif_colors.tif")
+import_b2 <- lapply(img_list_b2, raster)
+import_b2
+img_19_raw <- stack(import_b2)
+plot(img_19_raw)
+
+img_list_b3 <- list.files(pattern = "20.08_Calamento_tif_colors.tif")
+import_b3 <- lapply(img_list_b3, raster)
+import_b3
+img_20_raw <- stack(import_b3)
+plot(img_20_raw)
+
+img_list_b3 <- list.files(pattern = "21.08_Calamento_tif_colors.tif")
+import_b3 <- lapply(img_list_b3, raster)
+import_b3
+img_21_raw <- stack(import_b3)
+plot(img_21_raw)
+
+img_list_b4 <- list.files(pattern = "22.08_Calamento_tif_colors.tif")
+import_b4 <- lapply(img_list_b4, raster)
+import_b4
+img_22_raw <- stack(import_b4)
+plot(img_22_raw)
+
+img_list_b5 <- list.files(pattern = "23.08_Calamento_tif_colors.tif")
+import_b5 <- lapply(img_list_b5, raster)
+import_b5
+img_23_raw <- stack(import_b5)
+plot(img_22_raw)
+
+#bande:
+#visualiziamo NIR nel 2018
+red_band_18 <- raster ("18.08_Calamento_B01.tif")
+red_band_18
+green_band_18 <- raster ("18.08_Calamento_B02.tif")
+green_band_18
+blue_band_18 <- raster ("18.08_Calamento_B03.tif")
+blue_band_18
+nir_b8_18 <- raster ("18.08_Calamento_B08.tif")
+rgb_stack_18 <- stack(red_band_18, green_band_18, blue_band_18, nir_b8_18)  
+plotRGB(rgb_stack_18, r=4, g=3, b=2) #messo il NIR nel rosso
+nir_18 <- rgb_stack_18 [[4]]
+plot(nir_18)
+colorRampPalette(c("red", "orange", "yellow"))(100)
+clr <- colorRampPalette(c("red", "orange", "yellow"))(100) 
+Plot_nir_18 <- plot(nir_18, col = clr)
+
+#visualiziamo NIR nel 2019
+red_band_19 <- raster ("19.08_Calamento_B01.tif")
+red_band_19
+green_band_19 <- raster ("19.08_Calamento_B02.tif")
+green_band_19
+blue_band_19 <- raster ("19.08_Calamento_B03.tif")
+blue_band_19
+nir_b8_19 <- raster ("19.08_Calamento_B08.tif")
+rgb_stack_19 <- stack(red_band_19, green_band_19, blue_band_19, nir_b8_19) 
+plotRGB(rgb_stack_19, r=4, g=3, b=2) #messo il NIR nel rosso
+nir_19 <- rgb_stack_19 [[4]]
+plot(nir_19)
+clr <- colorRampPalette(c("red", "orange", "yellow"))(100) 
+Plot_nir_19 <- plot(nir_19, col = clr)
+
+#visualiziamo NIR nel 2020
+red_band_20 <- raster ("20.08_Calamento_B01.tif")
+red_band_20
+green_band_20 <- raster ("20.08_Calamento_B02.tif")
+green_band_20
+blue_band_20 <- raster ("20.08_Calamento_B03.tif")
+blue_band_20
+nir_b8_20 <- raster ("20.08_Calamento_B08.tif")
+rgb_stack_20 <- stack(red_band_20, green_band_20, blue_band_20, nir_b8_20)
+plotRGB(rgb_stack_20, r=4, g=3, b=2) #messo il NIR nel rosso
+nir_20 <- rgb_stack_20 [[4]]
+plot(nir_20)
+clr <- colorRampPalette(c("red", "orange", "yellow"))(100) 
+Plot_nir_20 <- plot(nir_20, col = clr)
+
+#visualiziamo NIR nel 2021
+red_band_21 <- raster ("21.08_Calamento_B01.tif")
+red_band_21
+green_band_21 <- raster ("21.08_Calamento_B02.tif")
+green_band_21
+blue_band_21 <- raster ("21.08_Calamento_B03.tif")
+blue_band_21
+nir_b8_21 <- raster ("21.08_Calamento_B08.tif")
+rgb_stack_21 <- stack(red_band_21, green_band_21, blue_band_21, nir_b8_21)
+plotRGB(rgb_stack_21, r=4, g=3, b=2) #messo il NIR nel rosso
+nir_21 <- rgb_stack_21 [[4]]
+plot(nir_21)
+clr <- colorRampPalette(c("red", "orange", "yellow"))(100) 
+Plot_nir_21 <- plot(nir_21, col = clr)
+
+#visualiziamo NIR nel 2022
+red_band_22 <- raster ("22.08_Calamento_B01.tif")
+red_band_22
+green_band_22 <- raster ("22.08_Calamento_B02.tif")
+green_band_22
+blue_band_22 <- raster ("22.08_Calamento_B03.tif")
+blue_band_22
+nir_b8_22 <- raster ("22.08_Calamento_B08.tif")
+rgb_stack_22 <- stack(red_band_22, green_band_22, blue_band_22, nir_b8_22) 
+plotRGB(rgb_stack_22, r=4, g=3, b=2) #messo il NIR nel rosso
+nir_22 <- rgb_stack_22 [[4]]
+plot(nir_22)
+clr <- colorRampPalette(c("red", "orange", "yellow"))(100) 
+Plot_nir_22 <- plot(nir_22, col = clr)
+
+#visualiziamo NIR nel 2023
+red_band_23 <- raster ("23.08_Calamento_B01.tif")
+red_band_23
+green_band_23 <- raster ("23.08_Calamento_B02.tif")
+green_band_23
+blue_band_23 <- raster ("23.08_Calamento_B03.tif")
+blue_band_23
+nir_b8_23 <- raster ("23.08_Calamento_B08.tif")
+rgb_stack_23 <- stack(red_band_23, green_band_23, blue_band_23, nir_b8_23) 
+plotRGB(rgb_stack_23, r=4, g=3, b=2) #messo il NIR nel rosso
+nir_23 <- rgb_stack_23 [[4]]
+plot(nir_23)
+clr <- colorRampPalette(c("red", "orange", "yellow"))(100) 
+Plot_nir_23 <- plot(nir_23, col = clr)
+
+par(mfrow = c(3, 3))
+plot(nir_18, col = clr)
+plot(nir_19, col = clr)
+plot(nir_20, col = clr)
+plot(nir_21, col = clr)
+plot(nir_22, col = clr)
+plot(nir_23, col = clr)
+
+#dataframe immagini raster
+str(img_18_raw)
+df_img_18 <- as.data.frame(img_18_raw, xy = TRUE)
+str(df_img_18)
+print(df_img_18)
+str(img_19_raw)
+df_img_19 <- as.data.frame(img_19_raw, xy = TRUE)
+str(df_img_19)
+print(df_img_19)
+
+str(rgb_stack_23)
+df_img_23 <- as.data.frame(rgb_stack_23, xy = TRUE)
+str(rgb_stack_23)
+print(rgb_stack_23)
+
+#___________________________
+red_band_18 <- im.import("18.08_Calamento_fc")
+
+nir_18 <- red_band_18[[1]]
+print(nir_18)
+plot(nir_18)
+mean_18 <- focal(nir_18, matrix(1/9, 3, 3), fun = mean)
+plot(mean_18)
+
+
+ndvi_2018 = (df_img_18[[4]] - df_img_18[[3]]) / (df_img_18[[4]]+ df_img_18[[3]])
+clp1 <- colorRampPalette(c("darkblue", "white", "darkgreen", "black")) (100)
+par(mfrow = c(3,3))
+plot(ndvi_2018, col = clp1, main = "2018")
+
+ndvi_2019 = (df_img_19[[4]] - df_img_19[[3]]) / (df_img_19[[4]] + df_img_19[[3]])
+ndvi_2023 = (img_23_raw[[4]] - img_23_raw[[3]]) / (img_23_raw[[4]] + img_23_raw[[3]])
