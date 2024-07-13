@@ -24,7 +24,7 @@ library(tidyr)
 library(sp)
 library(dplyr)
 #setwd("C:/Users/Tecnico.3/Desktop/anna/Nuova cartella/GitHub/T_24")
-my_im_list <- list.files("C:/Users/Tecnico.3/Desktop/anna/Nuova cartella/GitHub/T_24")
+my_im_list <- list.files("C:/Users/Proprietario/Desktop/Telerilevamento")
 my_im_list
 img_list_b1 <- list.files(pattern = "18.08_Calamento_tif_colors.tif")
 import_b1 <- lapply(img_list_b1, raster) 
@@ -61,7 +61,15 @@ img_list_b5 <- list.files(pattern = "23.08_Calamento_tif_colors.tif")
 import_b5 <- lapply(img_list_b5, raster)
 import_b5
 img_23_raw <- stack(import_b5)
+plot(img_23_raw)
+
+par(mfrow = c(3,3))
+plot(img_18_raw)
+plot(img_19_raw)
+plot(img_20_raw)
+plot(img_21_raw)
 plot(img_22_raw)
+plot(img_23_raw)
 
 #bande:
 #visualiziamo NIR nel 2018
@@ -73,10 +81,9 @@ blue_band_18 <- raster ("18.08_Calamento_B03.tif")
 blue_band_18
 nir_b8_18 <- raster ("18.08_Calamento_B08.tif")
 rgb_stack_18 <- stack(red_band_18, green_band_18, blue_band_18, nir_b8_18)  
-plotRGB(rgb_stack_18, r=4, g=3, b=2) #messo il NIR nel rosso
+im.plotRGB (rgb_stack_18, r=4, g=3, b=2) #messo il NIR nel rosso
 nir_18 <- rgb_stack_18 [[4]]
 plot(nir_18)
-colorRampPalette(c("red", "orange", "yellow"))(100)
 clr <- colorRampPalette(c("red", "orange", "yellow"))(100) 
 Plot_nir_18 <- plot(nir_18, col = clr)
 
@@ -89,7 +96,7 @@ blue_band_19 <- raster ("19.08_Calamento_B03.tif")
 blue_band_19
 nir_b8_19 <- raster ("19.08_Calamento_B08.tif")
 rgb_stack_19 <- stack(red_band_19, green_band_19, blue_band_19, nir_b8_19) 
-plotRGB(rgb_stack_19, r=4, g=3, b=2) #messo il NIR nel rosso
+im.plotRGB (rgb_stack_19, r=4, g=3, b=2) #messo il NIR nel rosso
 nir_19 <- rgb_stack_19 [[4]]
 plot(nir_19)
 clr <- colorRampPalette(c("red", "orange", "yellow"))(100) 
@@ -104,7 +111,7 @@ blue_band_20 <- raster ("20.08_Calamento_B03.tif")
 blue_band_20
 nir_b8_20 <- raster ("20.08_Calamento_B08.tif")
 rgb_stack_20 <- stack(red_band_20, green_band_20, blue_band_20, nir_b8_20)
-plotRGB(rgb_stack_20, r=4, g=3, b=2) #messo il NIR nel rosso
+im.plotRGB (rgb_stack_20, r=4, g=3, b=2) #messo il NIR nel rosso
 nir_20 <- rgb_stack_20 [[4]]
 plot(nir_20)
 clr <- colorRampPalette(c("red", "orange", "yellow"))(100) 
@@ -119,7 +126,7 @@ blue_band_21 <- raster ("21.08_Calamento_B03.tif")
 blue_band_21
 nir_b8_21 <- raster ("21.08_Calamento_B08.tif")
 rgb_stack_21 <- stack(red_band_21, green_band_21, blue_band_21, nir_b8_21)
-plotRGB(rgb_stack_21, r=4, g=3, b=2) #messo il NIR nel rosso
+im.plotRGB (rgb_stack_21, r=4, g=3, b=2) #messo il NIR nel rosso
 nir_21 <- rgb_stack_21 [[4]]
 plot(nir_21)
 clr <- colorRampPalette(c("red", "orange", "yellow"))(100) 
@@ -134,7 +141,7 @@ blue_band_22 <- raster ("22.08_Calamento_B03.tif")
 blue_band_22
 nir_b8_22 <- raster ("22.08_Calamento_B08.tif")
 rgb_stack_22 <- stack(red_band_22, green_band_22, blue_band_22, nir_b8_22) 
-plotRGB(rgb_stack_22, r=4, g=3, b=2) #messo il NIR nel rosso
+im.plotRGB (rgb_stack_22, r=4, g=3, b=2) #messo il NIR nel rosso
 nir_22 <- rgb_stack_22 [[4]]
 plot(nir_22)
 clr <- colorRampPalette(c("red", "orange", "yellow"))(100) 
@@ -149,11 +156,12 @@ blue_band_23 <- raster ("23.08_Calamento_B03.tif")
 blue_band_23
 nir_b8_23 <- raster ("23.08_Calamento_B08.tif")
 rgb_stack_23 <- stack(red_band_23, green_band_23, blue_band_23, nir_b8_23) 
-plotRGB(rgb_stack_23, r=4, g=3, b=2) #messo il NIR nel rosso
-nir_23 <- rgb_stack_23 [[4]]
+im.plotRGB(rgb_stack_23, r=4, g=3, b=2) #messo il NIR nel rosso
+nir_23 <- rgb_stack_23 [[4]] #messo il NIR nel rosso
 plot(nir_23)
 clr <- colorRampPalette(c("red", "orange", "yellow"))(100) 
 Plot_nir_23 <- plot(nir_23, col = clr)
+
 
 par(mfrow = c(2, 3))
 plot(Plot_nir_18, col = clr)
