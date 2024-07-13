@@ -23,56 +23,71 @@ library(sf)
 library(tidyr)
 library(sp)
 library(dplyr)
-#setwd("C:/Users/Tecnico.3/Desktop/anna/Nuova cartella/GitHub/T_24")
+setwd("C:/Users/Proprietario/Desktop/Telerilevamento")
 my_im_list <- list.files("C:/Users/Proprietario/Desktop/Telerilevamento")
 my_im_list
-img_list_b1 <- list.files(pattern = "18.08_Calamento_tif_colors.tif")
-import_b1 <- lapply(img_list_b1, raster) 
-import_b1
-img_18_raw <- stack(import_b1)
-img_18_raw
-plot(img_18_raw)
 
-img_list_b2 <- list.files(pattern = "19.08_Calamento_tif_colors.tif")
-import_b2 <- lapply(img_list_b2, raster)
-import_b2
-img_19_raw <- stack(import_b2)
-plot(img_19_raw)
+Calamento_18 <- rast ("18.08_Calamento_tif_colors.tif")
+bandar18 <- Calamento_18[[1]]
+bandag18 <- Calamento_18[[2]]
+bandab18 <- Calamento_18[[3]]
+bandanir18 <- Calamento_18[[4]]
+C2018 <- c(bandar18, bandag18, bandab18, bandanir18)
 
-img_list_b3 <- list.files(pattern = "20.08_Calamento_tif_colors.tif")
-import_b3 <- lapply(img_list_b3, raster)
-import_b3
-img_20_raw <- stack(import_b3)
-plot(img_20_raw)
+Calamento_19 <- rast ("19.08_Calamento_tif_colors.tif")
+bandar19 <- Calamento_19[[1]]
+bandag19 <- Calamento_19[[2]]
+bandab19 <- Calamento_19[[3]]
+bandanir19 <- Calamento_19[[4]]
+C2019 <- c(bandar19, bandag19, bandab19, bandanir19)
 
-img_list_b3 <- list.files(pattern = "21.08_Calamento_tif_colors.tif")
-import_b3 <- lapply(img_list_b3, raster)
-import_b3
-img_21_raw <- stack(import_b3)
-plot(img_21_raw)
+Calamento_20 <- rast ("20.08_Calamento_tif_colors.tif")
+bandar20 <- Calamento_20 [[1]]
+bandag20 <- Calamento_20[[2]]
+bandab20 <- Calamento_20[[3]]
+bandanir20 <- Calamento_20[[4]]
+C2020 <- c(bandar20, bandag20, bandab20, bandanir20)
 
-img_list_b4 <- list.files(pattern = "22.08_Calamento_tif_colors.tif")
-import_b4 <- lapply(img_list_b4, raster)
-import_b4
-img_22_raw <- stack(import_b4)
-plot(img_22_raw)
+Calamento_21 <- rast ("21.08_Calamento_tif_colors.tif")
+bandar21 <- Calamento_21 [[1]]
+bandag21 <- Calamento_21[[2]]
+bandab21 <- Calamento_21[[3]]
+bandanir21 <- Calamento_21[[4]]
+C2021 <- c(bandar21, bandag21, bandab21, bandanir21)
 
-img_list_b5 <- list.files(pattern = "23.08_Calamento_tif_colors.tif")
-import_b5 <- lapply(img_list_b5, raster)
-import_b5
-img_23_raw <- stack(import_b5)
-plot(img_23_raw)
+Calamento_22 <- rast ("22.08_Calamento_tif_colors.tif")
+bandar22 <- Calamento_22 [[1]]
+bandag22 <- Calamento_22[[2]]
+bandab22 <- Calamento_22[[3]]
+bandanir22 <- Calamento_22[[4]]
+C2022 <- c(bandar22, bandag22, bandab22, bandanir22)
 
-par(mfrow = c(3,3))
-plot(img_18_raw)
-plot(img_19_raw)
-plot(img_20_raw)
-plot(img_21_raw)
-plot(img_22_raw)
-plot(img_23_raw)
+Calamento_23 <- rast ("23.08_Calamento_tif_colors.tif")
+bandar23 <- Calamento_23 [[1]]
+bandag23 <- Calamento_23[[2]]
+bandab23 <- Calamento_23[[3]]
+bandanir23 <- Calamento_23[[4]]
+C2023 <- c(bandar23, bandag23, bandab23, bandanir23)
+
+#corelazione fra le varie bande
+pairs(C2018)
+pairs(C2019)
+pairs(C2020)
+pairs(C2021)
+pairs(C2022)
+pairs(C2023)
+
+par(mfrow = c(2, 3))
+im.plotRGB.auto (C2018) #plotta in automatico le bande
+im.plotRGB.auto (C2019)
+im.plotRGB.auto (C2020)
+im.plotRGB.auto (C2021)
+im.plotRGB.auto (C2022)
+im.plotRGB.auto (C2023)
 
 #bande:
-#visualiziamo NIR nel 2018
+#visualiziamo NIR nel 2018; posso scaricare le singole bande da Copernicus o 
+#utilizzare le bande appenna suddivise:
 red_band_18 <- raster ("18.08_Calamento_B01.tif")
 red_band_18
 green_band_18 <- raster ("18.08_Calamento_B02.tif")
@@ -162,7 +177,6 @@ plot(nir_23)
 clr <- colorRampPalette(c("red", "orange", "yellow"))(100) 
 Plot_nir_23 <- plot(nir_23, col = clr)
 
-
 par(mfrow = c(2, 3))
 plot(Plot_nir_18, col = clr)
 plot(Plot_nir_19, col = clr)
@@ -171,13 +185,6 @@ plot(Plot_nir_21, col = clr)
 plot(Plot_nir_22, col = clr)
 plot(Plot_nir_23, col = clr)
 
-#per controllare le corelazione tra le varie bande: 
-pairs(rgb_stack_18)
-pairs(rgb_stack_19)
-pairs(rgb_stack_20)
-pairs(rgb_stack_21)
-pairs(rgb_stack_22)
-pairs(rgb_stack_23)
 
 #differenze NDVI per vedere la variazione della vegetazione
 #la quantità di vegetazione viva presente in un area si basa sulla differenza tra 
@@ -264,4 +271,102 @@ ggplot()+
               mapping = aes (x = x, y = y, fill = layer.1)) +
   scale_fill_viridis(name = "PC2 values") +
   labs (title = "PCA of NDVI difference 2020 - 2023")
+#classificazione: selezione del numero di livelli energetici nell'immagine per capire la 
+#copertura vegetale. Si ottiene un confronto per osservare la variazione nel tempo della copertura vegetale. 
+library(ggplot2)
+cl2018 <- im.classify(C2018, num_clusters = 4)
+cl2019 <- im.classify(C2019, num_clusters = 4)
+cl2020 <- im.classify(C2020, num_clusters = 4)
+cl2021 <- im.classify(C2021, num_clusters = 4)
+cl2022 <- im.classify(C2022, num_clusters = 4)
+cl2023 <- im.classify(C2023, num_clusters = 4)
 
+#si genera un cluster che prende dei pixel casuali selezionati dall'algoritmo;
+#trovo la frequenza dei pixel di ogni classe
+f2018 <- freq (cl2018)
+f2018
+tot2018 <- ncell (C2018)
+tot2018
+prop2018 = f2018 / tot2018
+prop2018
+perc2018 = prop2018 * 100
+perc2018
+f2019 <- freq (cl2019)
+f2019
+tot2019 <- ncell (C2019)
+tot2019
+prop2019 = f2019 / tot2019
+perc2019 = prop2019 *100
+perc2019
+f2020 <- freq (cl2020)
+f2020
+tot2020 <- ncell (C2020)
+tot2020
+prop2020 = f2020 / tot2020
+perc2020 = prop2020 *100
+perc2020
+f2021 <- freq (cl2021)
+f2021
+tot2021 <- ncell (C2021)
+tot2021
+prop2021 = f2021 / tot2021
+perc2021 = prop2021 *100
+perc2021
+f2022 <- freq (cl2022)
+f2022
+tot2022 <- ncell (C2022)
+tot2022
+prop2022 = f2022 / tot2022
+perc2022 = prop2022 *100
+perc2022
+f2023 <- freq (cl2023)
+f2023
+tot2023 <- ncell (C2023)
+tot2023
+prop2023 = f2023 / tot2023
+perc2023 = prop2023 *100
+perc2023
+#creiamo un dataframe
+class_2018_2023 <- c("Suolo nudo", "Foresta")
+y2018 <- c(18.75, 70.74)
+y2019 <- c(25.97, 59.38)
+y2020 <- c(25.46, 55.87)
+y2021 <- c(26.47, 55.79)
+y2022 <- c(27.42, 53.30)
+y2023 <- c(32.35, 47.72)
+
+tabella1 <- data.frame(class_2018_2023, y2018, y2019, y2020, y2021, y2022, y2023 )
+tabella1
+str(tabella1)
+
+grafico_18 <- ggplot(tabella1, aes(x = class_2018_2023, y = y2018)) + 
+  geom_bar(stat = "identity", fill = "steelblue") +
+  labs(title = "Foresta e Suolo 2018",
+       x = "Classificazione",
+       y = "Percentuale")
+grafico_19 <- ggplot(tabella1, aes(x = class_2018_2023, y = y2019)) + 
+  geom_bar(stat = "identity", fill = "steelblue") +
+  labs(title = "Foresta e Suolo 2019",
+       x = "Classificazione",
+       y = "Percentuale")     
+grafico_20 <- ggplot(tabella1, aes(x = class_2018_2023, y = y2020)) + 
+  geom_bar(stat = "identity", fill = "steelblue") +
+  labs(title = "Foresta e Suolo 2020",
+       x = "Classificazione",
+       y = "Percentuale")  
+grafico_21 <- ggplot(tabella1, aes(x = class_2018_2023, y = y2021)) + 
+  geom_bar(stat = "identity", fill = "steelblue") +
+  labs(title = "Foresta e Suolo 2021",
+       x = "Classificazione",
+       y = "Percentuale")  
+grafico_22 <- ggplot(tabella1, aes(x = class_2018_2023, y = y2022)) + 
+  geom_bar(stat = "identity", fill = "steelblue") +
+  labs(title = "Foresta e Suolo 2022",
+       x = "Classificazione",
+       y = "Percentuale")  
+grafico_23 <- ggplot(tabella1, aes(x = class_2018_2023, y = y2023)) + 
+  geom_bar(stat = "identity", fill = "steelblue") +
+  labs(title = "Foresta e Suolo 2023",
+       x = "Classificazione",
+       y = "Percentuale")  
+install.packages("gridExtra")
