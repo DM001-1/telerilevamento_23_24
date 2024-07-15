@@ -4,13 +4,14 @@ install.packages("raster")
 install.packages("viridis")
 install.packages("terra")
 install.packages("devtools")
-install.packages("devtools", dependencies = TRUE)
-install_github ("ducciorocchini/imageRy", force = TRUE)
+install_github ("ducciorocchini/imageRy")
 install.packages("tidyverse")
 install.packages("sf")
 install.packages("tidyr")
 install.packages("sp")
 install.packages("dplyr")
+install.packages("gridExtra")
+library(gridExtra)
 library(terra)
 library(devtools)
 library(raster)
@@ -23,7 +24,8 @@ library(sf)
 library(tidyr)
 library(sp)
 library(dplyr)
-setwd("C:/Users/Proprietario/Desktop/Telerilevamento")
+# creo collegamento con la cartella diretta:
+#setwd("C:/Users/Proprietario/Desktop/Telerilevamento")
 my_im_list <- list.files("C:/Users/Proprietario/Desktop/Telerilevamento")
 my_im_list
 
@@ -70,12 +72,13 @@ bandanir23 <- Calamento_23[[4]]
 C2023 <- c(bandar23, bandag23, bandab23, bandanir23)
 
 #corelazione fra le varie bande
-pairs(C2018)
-pairs(C2019)
-pairs(C2020)
-pairs(C2021)
-pairs(C2022)
-pairs(C2023)
+PC2018 <- pairs(C2018)
+PC2019 <- pairs(C2019)
+PC2020 <- pairs(C2020)
+PC2021 <- pairs(C2021)
+PC2022 <- pairs(C2022)
+PC2023 <- pairs(C2023)
+
 
 par(mfrow = c(2, 3))
 im.plotRGB.auto (C2018) #plotta in automatico le bande
@@ -99,7 +102,8 @@ rgb_stack_18 <- stack(red_band_18, green_band_18, blue_band_18, nir_b8_18)
 im.plotRGB (rgb_stack_18, r=4, g=3, b=2) #messo il NIR nel rosso
 nir_18 <- rgb_stack_18 [[4]]
 plot(nir_18)
-clr <- colorRampPalette(c("red", "orange", "yellow"))(100) 
+clr <- colorRampPalette(c( "blue", "yellow", "beige"))(100) 
+par(mfrow = c ( 1, 1))
 Plot_nir_18 <- plot(nir_18, col = clr)
 
 #visualiziamo NIR nel 2019
@@ -114,7 +118,6 @@ rgb_stack_19 <- stack(red_band_19, green_band_19, blue_band_19, nir_b8_19)
 im.plotRGB (rgb_stack_19, r=4, g=3, b=2) #messo il NIR nel rosso
 nir_19 <- rgb_stack_19 [[4]]
 plot(nir_19)
-clr <- colorRampPalette(c("red", "orange", "yellow"))(100) 
 Plot_nir_19 <- plot(nir_19, col = clr)
 
 #visualiziamo NIR nel 2020
@@ -129,7 +132,6 @@ rgb_stack_20 <- stack(red_band_20, green_band_20, blue_band_20, nir_b8_20)
 im.plotRGB (rgb_stack_20, r=4, g=3, b=2) #messo il NIR nel rosso
 nir_20 <- rgb_stack_20 [[4]]
 plot(nir_20)
-clr <- colorRampPalette(c("red", "orange", "yellow"))(100) 
 Plot_nir_20 <- plot(nir_20, col = clr)
 
 #visualiziamo NIR nel 2021
@@ -144,7 +146,6 @@ rgb_stack_21 <- stack(red_band_21, green_band_21, blue_band_21, nir_b8_21)
 im.plotRGB (rgb_stack_21, r=4, g=3, b=2) #messo il NIR nel rosso
 nir_21 <- rgb_stack_21 [[4]]
 plot(nir_21)
-clr <- colorRampPalette(c("red", "orange", "yellow"))(100) 
 Plot_nir_21 <- plot(nir_21, col = clr)
 
 #visualiziamo NIR nel 2022
@@ -159,7 +160,6 @@ rgb_stack_22 <- stack(red_band_22, green_band_22, blue_band_22, nir_b8_22)
 im.plotRGB (rgb_stack_22, r=4, g=3, b=2) #messo il NIR nel rosso
 nir_22 <- rgb_stack_22 [[4]]
 plot(nir_22)
-clr <- colorRampPalette(c("red", "orange", "yellow"))(100) 
 Plot_nir_22 <- plot(nir_22, col = clr)
 
 #visualiziamo NIR nel 2023
@@ -174,63 +174,59 @@ rgb_stack_23 <- stack(red_band_23, green_band_23, blue_band_23, nir_b8_23)
 im.plotRGB(rgb_stack_23, r=4, g=3, b=2) #messo il NIR nel rosso
 nir_23 <- rgb_stack_23 [[4]] #messo il NIR nel rosso
 plot(nir_23)
-clr <- colorRampPalette(c("red", "orange", "yellow"))(100) 
 Plot_nir_23 <- plot(nir_23, col = clr)
-
-par(mfrow = c(2, 3))
-plot(Plot_nir_18, col = clr)
-plot(Plot_nir_19, col = clr)
-plot(Plot_nir_20, col = clr)
-plot(Plot_nir_21, col = clr)
-plot(Plot_nir_22, col = clr)
-plot(Plot_nir_23, col = clr)
-
 
 #differenze NDVI per vedere la variazione della vegetazione
 #la quantità di vegetazione viva presente in un area si basa sulla differenza tra 
 #la banda del NIR e la banda del Rosso:
 im.plotRGB(rgb_stack_18, r=3, g=2, b=1) # bande rosso, verde, blu
-DVI_18 <- rgb_stack_18 [[4]] - rgb_stack_18 [[3]]
-clp2 <- colorRampPalette(c("beige", "chocolate", "darkolivegreen1", "chartreuse"))(100)
+DVI_18 <- nir_18 - rgb_stack_18 [[3]]
+clp2 <- colorRampPalette(c("chocolate", "lightyellow", "darkgreen", "black"))(100)
 par(mfrow = c(1, 1))
 plot(DVI_18, col = clp2)
 NDVI_18 <- DVI_18 / (rgb_stack_18 [[4]] + rgb_stack_18 [[3]])
+plot(NDVI_18, col = clp2)
 
 im.plotRGB(rgb_stack_19, r=3, g=2, b=1) # bande rosso, verde, blu
-DVI_19 <- rgb_stack_19 [[4]] - rgb_stack_19 [[3]]
+DVI_19 <- nir_19 - rgb_stack_19 [[3]]
 par(mfrow = c(1, 1))
 plot(DVI_19, col = clp2)
 NDVI_19 <- DVI_19 / (rgb_stack_19 [[4]] + rgb_stack_19 [[3]])
+plot(NDVI_19, col = clp2)
 
 im.plotRGB(rgb_stack_20, r=3, g=2, b=1) # bande rosso, verde, blu
-DVI_20 <- rgb_stack_20 [[4]] - rgb_stack_20 [[3]]
+DVI_20 <- nir_20 - rgb_stack_20 [[3]]
 par(mfrow = c(1, 1))
 plot(DVI_20, col = clp2)
 NDVI_20 <- DVI_20 / (rgb_stack_20 [[4]] + rgb_stack_20 [[3]])
+plot(NDVI_20, col = clp2)
 
 im.plotRGB(rgb_stack_21, r=3, g=2, b=1) # bande rosso, verde, blu
-DVI_21 <- rgb_stack_21 [[4]] - rgb_stack_21 [[3]]
+DVI_21 <- nir_21 - rgb_stack_21 [[3]]
 par(mfrow = c(1, 1))
 plot(DVI_21, col = clp2)
 NDVI_21 <- DVI_21 / (rgb_stack_21 [[4]] + rgb_stack_21 [[3]])
+plot (NDVI_21, col = clp2)
 
 im.plotRGB(rgb_stack_22, r=3, g=2, b=1) # bande rosso, verde, blu
-DVI_22 <- rgb_stack_22 [[4]] - rgb_stack_22 [[3]]
+DVI_22 <- nir_22 - rgb_stack_22 [[3]]
 par(mfrow = c(1, 1))
 plot(DVI_22, col = clp2)
 NDVI_22 <- DVI_22 / (rgb_stack_22 [[4]] + rgb_stack_22 [[3]])
+plot(NDVI_22, col = clp2)
 
 im.plotRGB(rgb_stack_23, r=3, g=2, b=1) # bande rosso, verde, blu
-DVI_23 <- rgb_stack_23 [[4]] - rgb_stack_23 [[3]]
+DVI_23 <- nir_23 - rgb_stack_23 [[3]]
 par(mfrow = c(1, 1))
 plot(DVI_23, col = clp2)
 NDVI_23 <- DVI_23 / (rgb_stack_23 [[4]] + rgb_stack_23 [[3]])
+plot(NDVI_23, col = clp2)
 
 #plot differenza temporale
 #un alta differenza sta per un alta perdita di vegetazione
 #dove troviamo un valore negativo è perchè c'è stato un incremento della vegetazione
 ndvi_dif1 = NDVI_18 - NDVI_19 #prima di vai e dopo vaia
-clp3 <- magma(100)
+clp3 <- cividis (100)
 plot(ndvi_dif1, col = clp3) #perdita vegetazione lungo tutto il versante
 ndvi_dif2 = NDVI_20 - NDVI_23
 plot(ndvi_dif2, col = clp3) 
@@ -244,7 +240,7 @@ summary(pca)
 #un valore maggiore di zero significa che la componente principale cattura una certa quantità di varianza dei dati originali
 #quindi qesta componente è utile per rappresentare i dati; se fosse zero non ci sarebbe nessuna variazione dati
 pca
-pci <- predict(ndvi_dif1, pca, index = c(1:3))
+pci <- predict(ndvi_dif1, pca, index = c(1:2))
 plot(pci)
 plot(pci[[1]])
 
@@ -256,12 +252,13 @@ ggplot()+
               mapping = aes (x = x, y = y, fill = layer.1)) +
   scale_fill_viridis(name = "PC1 values") +
   labs (title = "PCA of NDVI difference 2018 - 2019")
+
 #ora osserviamo la differenza di vegetazione dal 2020 fino al 2023
 sample1 <- sampleRandom(ndvi_dif2, 10000)
 pca1 <- prcomp (sample1)
 summary(pca1)
 pca1
-pci1 <- predict(ndvi_dif2, pca1, index = c(1:3))
+pci1 <- predict(ndvi_dif2, pca1, index = c(1:2))
 plot(pci1)
 plot(pci1[[1]])
 pcid1 <- as.data.frame(pci1 [[1]], xy = T)
@@ -271,9 +268,32 @@ ggplot()+
               mapping = aes (x = x, y = y, fill = layer.1)) +
   scale_fill_viridis(name = "PC2 values") +
   labs (title = "PCA of NDVI difference 2020 - 2023")
+
+#deviazione standard
+library(raster)
+sd_18_19 <- focal (pci [[1]], matrix(1/9, 3, 3), fun = sd)
+sd_20_23 <- focal (pci1 [[1]], matrix(1/9, 3, 3), fun = sd)
+sd_18_19_d <- as.data.frame(sd_18_19, xy = T)
+sd_20_23_d <- as.data.frame(sd_20_23, xy = T)
+
+# Plot deviazione standard
+
+ggplot() +
+  geom_raster (sd_18_19_d, 
+               mapping = aes(x = x, y = y , fill = layer)) +
+  scale_fill_viridis() +
+  labs(title = "deviazione standard 2018_2019")
+      
+ggplot() +
+  geom_raster (sd_20_23_d, 
+               mapping = aes(x = x, y = y , fill = layer)) +
+  scale_fill_viridis() +
+  labs(title = "deviazione standard 2020_2023")
+
 #classificazione: selezione del numero di livelli energetici nell'immagine per capire la 
 #copertura vegetale. Si ottiene un confronto per osservare la variazione nel tempo della copertura vegetale. 
-library(ggplot2)
+
+par(mfrow = c(2, 3))
 cl2018 <- im.classify(C2018, num_clusters = 4)
 cl2019 <- im.classify(C2019, num_clusters = 4)
 cl2020 <- im.classify(C2020, num_clusters = 4)
@@ -369,4 +389,4 @@ grafico_23 <- ggplot(tabella1, aes(x = class_2018_2023, y = y2023)) +
   labs(title = "Foresta e Suolo 2023",
        x = "Classificazione",
        y = "Percentuale")  
-install.packages("gridExtra")
+grid.arrange(grafico_18, grafico_19, grafico_20, grafico_21, grafico_22, grafico_23, ncol = 3 )  
