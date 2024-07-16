@@ -390,4 +390,3 @@ grafico_23 <- ggplot(tabella1, aes(x = class_2018_2023, y = y2023)) +
        x = "Classificazione",
        y = "Percentuale")  
 grid.arrange(grafico_18, grafico_19, grafico_20, grafico_21, grafico_22, grafico_23, ncol = 3 )
-grid.arrange(grafico_18, grafico_19, grafico_20, grafico_21, grafico_22, grafico_23, ncol = 3 )  
