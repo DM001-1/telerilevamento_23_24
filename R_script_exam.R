@@ -72,12 +72,12 @@ bandanir23 <- Calamento_23[[4]]
 C2023 <- c(bandar23, bandag23, bandab23, bandanir23)
 
 #corelazione fra le varie bande
-PC2018 <- pairs(C2018)
-PC2019 <- pairs(C2019)
-PC2020 <- pairs(C2020)
-PC2021 <- pairs(C2021)
-PC2022 <- pairs(C2022)
-PC2023 <- pairs(C2023)
+pairs(C2018)
+pairs(C2019)
+pairs(C2020)
+pairs(C2021)
+pairs(C2022)
+pairs(C2023)
 
 
 par(mfrow = c(2, 3))
@@ -102,7 +102,7 @@ rgb_stack_18 <- stack(red_band_18, green_band_18, blue_band_18, nir_b8_18)
 im.plotRGB (rgb_stack_18, r=4, g=3, b=2) #messo il NIR nel rosso
 nir_18 <- rgb_stack_18 [[4]]
 plot(nir_18)
-clr <- colorRampPalette(c( "blue", "yellow", "beige"))(100) 
+clr <- colorRampPalette(c( "blue", "lightgreen", "yellow"))(100) 
 par(mfrow = c ( 1, 1))
 Plot_nir_18 <- plot(nir_18, col = clr)
 
@@ -226,7 +226,7 @@ plot(NDVI_23, col = clp2)
 #un alta differenza sta per un alta perdita di vegetazione
 #dove troviamo un valore negativo è perchè c'è stato un incremento della vegetazione
 ndvi_dif1 = NDVI_18 - NDVI_19 #prima di vai e dopo vaia
-clp3 <- cividis (100)
+clp3 <- viridis (100)
 plot(ndvi_dif1, col = clp3) #perdita vegetazione lungo tutto il versante
 ndvi_dif2 = NDVI_20 - NDVI_23
 plot(ndvi_dif2, col = clp3) 
@@ -294,12 +294,12 @@ ggplot() +
 #copertura vegetale. Si ottiene un confronto per osservare la variazione nel tempo della copertura vegetale. 
 
 par(mfrow = c(2, 3))
-cl2018 <- im.classify(C2018, num_clusters = 4)
-cl2019 <- im.classify(C2019, num_clusters = 4)
-cl2020 <- im.classify(C2020, num_clusters = 4)
-cl2021 <- im.classify(C2021, num_clusters = 4)
-cl2022 <- im.classify(C2022, num_clusters = 4)
-cl2023 <- im.classify(C2023, num_clusters = 4)
+cl2018 <- im.classify(C2018, num_clusters = 3)
+cl2019 <- im.classify(C2019, num_clusters = 3)
+cl2020 <- im.classify(C2020, num_clusters = 3)
+cl2021 <- im.classify(C2021, num_clusters = 3)
+cl2022 <- im.classify(C2022, num_clusters = 3)
+cl2023 <- im.classify(C2023, num_clusters = 3)
 
 #si genera un cluster che prende dei pixel casuali selezionati dall'algoritmo;
 #trovo la frequenza dei pixel di ogni classe
@@ -347,13 +347,13 @@ prop2023 = f2023 / tot2023
 perc2023 = prop2023 *100
 perc2023
 #creiamo un dataframe
-class_2018_2023 <- c("Suolo nudo", "Foresta")
-y2018 <- c(18.75, 70.74)
-y2019 <- c(25.97, 59.38)
-y2020 <- c(25.46, 55.87)
-y2021 <- c(26.47, 55.79)
-y2022 <- c(27.42, 53.30)
-y2023 <- c(32.35, 47.72)
+class_2018_2023 <- c("Suolo nudo", "Foresta", "Spazi aperti in vetta")
+y2018 <- c(27.999, 52.562, 19.438)
+y2019 <- c(30.854, 44.678, 24.468)
+y2020 <- c(30.427, 45.211, 24.362)
+y2021 <- c(31.364, 45.354, 23.281)
+y2022 <- c(33.401, 46.744, 19.854)
+y2023 <- c(35.034, 45.747, 19.217)
 
 tabella1 <- data.frame(class_2018_2023, y2018, y2019, y2020, y2021, y2022, y2023 )
 tabella1
@@ -389,4 +389,5 @@ grafico_23 <- ggplot(tabella1, aes(x = class_2018_2023, y = y2023)) +
   labs(title = "Foresta e Suolo 2023",
        x = "Classificazione",
        y = "Percentuale")  
+grid.arrange(grafico_18, grafico_19, grafico_20, grafico_21, grafico_22, grafico_23, ncol = 3 )
 grid.arrange(grafico_18, grafico_19, grafico_20, grafico_21, grafico_22, grafico_23, ncol = 3 )  
