@@ -1,0 +1,157 @@
+\documentclass[10pt]{beamer}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{url}
+\usepackage{hyperref}
+\usepackage{hyperref}
+\usepackage{subcaption}
+\usepackage{setspace}
+\usepackage{ragged2e}
+\usepackage[T1]{fontenc}
+
+\usetheme{Frankfurt}  
+\usecolortheme{orchid}
+\sloppy
+
+\title{Calamento (TN)\\
+dal 2018 al 2023}
+\author{anna slomp}
+%\date{July 2024}
+
+\begin  {document}
+\maketitle
+
+
+\AtBeginSection[]
+{
+\begin{frame}
+\frametitle{Outline}
+\tableofcontents[currentsection]
+\end{frame}
+}
+\section{Introduzione}
+\begin{frame}{Calamento, frazione di Telve (TN)}
+Questo progetto vuole analizzare la perdita di vegetazione presso la località Calamento in seguito all'evento Vaia ed osservare lo sviluppo del bosco fino al 2023:
+\begin{itemize}
+    \item Inquadramento dell'area attraverso l'utilizzo\\
+    di Sentinel 2 - Copernicus;
+    \item Analisi NDVI and PCA; 
+    \item Classificazione dell'area;
+    \item Conclusioni;
+\end{itemize}
+Lo strumento utilizzato per l'analisi è R coding:
+\href{https://github.com/DM001-1/telerilevamento_23_24/blob/main/R_script_exam.R}{Vedi link GitHub}
+\end{frame}    
+
+\section{Sentinel 2 - portale di Copernicus}
+\begin{frame}{Raccolta immagini satelitari dell'area di interesse:}
+Confronto temporale fra le immagini a colori naturali: 
+\includegraphics[width = \textwidth]{immagini_satellite.jpeg}
+\end{frame}
+
+\begin{frame}{Copernicus - identificazione delle singole bande:}
+\begin{figure}
+        \centering
+        \includegraphics[width=.4\linewidth]{nir_2018.jpeg}
+        \includegraphics[width=.4\linewidth]{nir_2019.jpeg} 
+        \includegraphics[width=.4\linewidth]{nir_2020.jpeg}
+        \includegraphics[width=.4\linewidth]{nir_2021.jpeg}
+        \includegraphics[width=.4\linewidth]{nir_2022.jpeg} 
+        \includegraphics[width=.4\linewidth]{nir_2023.jpeg}
+    \end{figure}
+\end{frame}
+\section{NDVI - Normalized Difference Vegetation Inde; \\
+PCA - Principal Component Analysis}
+
+\begin{frame}{NDVI}
+Indicatore utilizzato per misurare la densità e la salute della vegetazione. Viene calcolato utilizzando la luce riflessa nelle bande del rosso e dell'infrarosso.
+\begin{equation}
+NDVI = \frac{(NIR-Red)}{(NIR+Red)} 
+\end{equation}
+\label{NDVI}
+I valori di NDVI variano da -1 e +1: valori vicino a 1 indicano vegetazione densa e sana; zero indicano le rocce/sabbia/neve; i negativi indicano acqua o nuvole. 
+\end{frame}
+
+\begin{frame}{NDVI}
+\begin{figure}
+        \centering
+        \includegraphics[width=.4\linewidth]{NDVI_2018.jpeg}
+        \includegraphics[width=.4\linewidth]{NDVI_2019.jpeg} 
+        \includegraphics[width=.4\linewidth]{NDVI_2020.jpeg}
+        \includegraphics[width=.4\linewidth]{NDVI_2021.jpeg}
+        \includegraphics[width=.4\linewidth]{NDVI_2022.jpeg} 
+        \includegraphics[width=.4\linewidth]{NDVI_2023.jpeg}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{Multivariate Analysis - PCA}
+\begin{itemize}
+    \item Tecnica statistica che riassume le bande componenti un immagine, in un solo livello e e seleziona i componenti principali;
+    \item PC1 prima componente principale, PC2 seconda componente principale, che catturano la maggior parte della varianza nei dati; 
+    \item La visualizzazione in ggplot aiuta a capire la variazione del dataset dei componenti principali.
+    \item Un valore maggiore di zero significa che la componente principale cattura una certa quantità di varianza dei dati originali, quindi questa componente è utile per rappresentare i dati; se fosse zero non ci sarebbe nessuna variazione dati.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+Differenza di vegetazione dal 2018 fino al 20219
+\includegraphics[width = \textwidth]{PCA_NDVI_18_19.jpeg}
+Più il valore si sposta verso 0.6 maggiore è la perdita di vegetazione.
+\end{frame}
+\begin{frame}
+Differenza di vegetazione dal 2020 fino al 2023
+\includegraphics[width = \textwidth]{PCA_NDVI_20_23.jpeg}
+Più il valore si sposta verso -0.6 acquisizione di vegetazione.
+\end{frame}   
+
+\begin{frame}{Deviazione standard}
+\begin{figure}
+        \centering
+        \includegraphics[width=.5\linewidth]{Deviazione standard 18_19.jpeg}
+        \includegraphics[width=.5
+        \linewidth]{deviazione standard_20_23.jpeg} 
+    \end{figure}
+      Consente di visualizzare la viariazione dei dati nel tempo e l'incerteza associata (margine di errore statistico).
+\end{frame}
+
+\section{Classificazione}
+\begin{frame}{Classification}
+Selezione, del numero di livelli energetici nell'immagine, per interpretare la copertura vegetale.
+\includegraphics[width = \textwidth]{Classificazione_3.jpeg}
+\end{frame}
+\begin{frame}
+Frequenza dei pixel di ogni classe:
+\begin{figure}
+        \centering
+        \includegraphics[width=.4\linewidth]{grafico_class_18.jpeg}
+        \includegraphics[width=.4\linewidth]{Gr_calss_19.jpeg} 
+        \includegraphics[width=.4\linewidth]{gr_clas_20.jpeg}
+        \includegraphics[width=.4\linewidth]{gr_clas_21.jpeg}
+        \includegraphics[width=.4\linewidth]{gr_clas_22.jpeg} 
+        \includegraphics[width=.4\linewidth]{gr_cals_23.jpeg}
+    \end{figure}
+\end{frame}
+
+\section{Previsione NDVI per il 2024}
+\begin{frame}{Andamento di crescita della vegetazione per l'anno 2024:}
+\centering
+\includegraphics[width = \textwidth]{Tendenza di crescita.jpeg}  
+\end{frame}
+
+\section{Conclusioni}
+\begin{frame}{Conclusioni}
+\begin{itemize}
+    \item Dall'analisi multivariata PCA possiamo affermare che, in seguito all'evento Vaia dal 2018 al 2019, abbiamo una perdita misurabile di foresta, composta principalmente da \textit{Picea abies};
+    \item In seguito all'evento possiamo misurare un leggero aumento del bosco in alcune aree all'interno dell'ambito di studio, ma resta comunque una percentuale di perdita di vegetazione;
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Conclusioni}
+\centering
+\includegraphics[width = \textwidth]{tabella classificazione.PNG} 
+\begin{itemize}
+    \item Si può ipotizzare che il continuo crescere della percentuale del suolo nudo anche dopo l'evento sia dovuto dal bostrico che attacca le piante rimaste in piedi da Vaia.
+     \item Si ipotizza che l'andamento dell'indice NDVI per l'anno 2024 sia verso l'apertura di nuovi spazi all'interno del bosco, quindi in continua perdita di bosco. 
+\end{itemize} 
+\end{frame}
+
+\end{document}
