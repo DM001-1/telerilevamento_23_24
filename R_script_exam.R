@@ -390,3 +390,27 @@ grafico_23 <- ggplot(tabella1, aes(x = class_2018_2023, y = y2023)) +
        x = "Classificazione",
        y = "Percentuale")  
 grid.arrange(grafico_18, grafico_19, grafico_20, grafico_21, grafico_22, grafico_23, ncol = 3 )
+
+#tendenza della crescita di vegetazione per l'anno 2024
+ndvi_dif3 <- NDVI_18 - NDVI_23
+ndvi_dif3
+ndvi_data <- data.frame(data = seq.Date(as.Date("2018-01-01"), as.Date("2024-01-01"),
+                                        by = "month"),
+                        ndvi_dif3 = runif(73, min = -0.605042, max = 0.5764411))
+#converto i dati in una serie temporale
+ts_ndvi <- ts (ndvi_data$ndvi_dif3, 
+              start = c(2018, 1), 
+              frequency = 12)
+#converto i dati per ggplo2
+data_df_ndvi <- data.frame(TEMPO = time(ts_ndvi),
+                           NDVI = as.numeric(ts_ndvi))
+data_df_ndvi
+ggplot(data_df_ndvi, aes(x = TEMPO, y = NDVI)) + 
+  geom_smooth(method = "loess") +
+  labs(title = "Tendenza crescita NDVI",
+       x = "Anni",
+       y = "NDVI")+
+  theme_minimal()
+  
+#accuratezza del modello
+accuracy(forecasted_values, test_data)
