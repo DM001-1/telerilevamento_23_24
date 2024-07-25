@@ -26,9 +26,11 @@ library(sp)
 library(dplyr)
 # creo collegamento con la cartella diretta:
 #setwd("C:/Users/Proprietario/Desktop/Telerilevamento")
+#creo la mia lista con tutte le immagini che contengo nella mia cartella diretta
 my_im_list <- list.files("C:/Users/Proprietario/Desktop/Telerilevamento")
 my_im_list
 
+#seleziono le mie bande partendo dall'immagine a colori naturali scaricata
 Calamento_18 <- rast ("18.08_Calamento_tif_colors.tif")
 bandar18 <- Calamento_18[[1]]
 bandag18 <- Calamento_18[[2]]
