@@ -3,6 +3,7 @@
 \usepackage{url}
 \usepackage{hyperref}
 \usepackage{hyperref}
+\hypersetup{colorlinks = true}
 \usepackage{subcaption}
 \usepackage{setspace}
 \usepackage{ragged2e}
@@ -14,7 +15,7 @@
 
 \title{Calamento (TN)\\
 dal 2018 al 2023}
-\author{anna slomp}
+\author{Anna Slomp}
 %\date{July 2024}
 
 \begin  {document}
@@ -48,20 +49,23 @@ Confronto temporale fra le immagini a colori naturali:
 \includegraphics[width = \textwidth]{immagini_satellite.jpeg}
 \end{frame}
 
-\begin{frame}{Copernicus - identificazione delle singole bande:}
+\begin{frame}{Copernicus - identificazione delle singole bande}
 \begin{figure}
         \centering
-        \includegraphics[width=.4\linewidth]{nir_2018.jpeg}
-        \includegraphics[width=.4\linewidth]{nir_2019.jpeg} 
-        \includegraphics[width=.4\linewidth]{nir_2020.jpeg}
-        \includegraphics[width=.4\linewidth]{nir_2021.jpeg}
-        \includegraphics[width=.4\linewidth]{nir_2022.jpeg} 
-        \includegraphics[width=.4\linewidth]{nir_2023.jpeg}
+        \includegraphics[width=.3\linewidth]{nir_2018.jpeg}
+        \includegraphics[width=.3\linewidth]{nir_2019.jpeg} 
+        \includegraphics[width=.3\linewidth]{nir_2020.jpeg}
+        \includegraphics[width=.3\linewidth]{nir_2021.jpeg}
+        \includegraphics[width=.3\linewidth]{nir_2022.jpeg} 
+        \includegraphics[width=.3\linewidth]{nir_2023.jpeg}
+Comando R per impostare la banda degli infrarossi (NIR) al posto della banda del rosso e riuscire a visualizzarli:\\ 
+> im.plotRGB(rgb, r=4, g=3, b=2)
     \end{figure}
 \end{frame}
+
+
 \section{NDVI - Normalized Difference Vegetation Inde; \\
 PCA - Principal Component Analysis}
-
 \begin{frame}{NDVI}
 Indicatore utilizzato per misurare la densità e la salute della vegetazione. Viene calcolato utilizzando la luce riflessa nelle bande del rosso e dell'infrarosso.
 \begin{equation}
@@ -85,10 +89,16 @@ I valori di NDVI variano da -1 e +1: valori vicino a 1 indicano vegetazione dens
 
 \begin{frame}{Multivariate Analysis - PCA}
 \begin{itemize}
-    \item Tecnica statistica che riassume le bande componenti un immagine, in un solo livello e e seleziona i componenti principali;
+    \item Tecnica statistica che riassume le bande componenti un immagine, in un solo livello e seleziona i componenti principali;
     \item PC1 prima componente principale, PC2 seconda componente principale, che catturano la maggior parte della varianza nei dati; 
-    \item La visualizzazione in ggplot aiuta a capire la variazione del dataset dei componenti principali.
     \item Un valore maggiore di zero significa che la componente principale cattura una certa quantità di varianza dei dati originali, quindi questa componente è utile per rappresentare i dati; se fosse zero non ci sarebbe nessuna variazione dati.
+    \item Comando R per calcolare la PCA : \\
+            > sample <- sampleRandom(ndvi.dif1, 10000); \\
+            > pca <- prcomp (sample);\\
+            > summary(pca);\\
+            > pci <- predict(ndvi.dif1, pca, index = c(1:2));\\
+            > plot(pci)
+    \item La visualizzazione in ggplot aiuta a capire la variazione del dataset dei componenti principali.
 \end{itemize}
 \end{frame}
 
@@ -106,11 +116,14 @@ Più il valore si sposta verso -0.6 acquisizione di vegetazione.
 \begin{frame}{Deviazione standard}
 \begin{figure}
         \centering
-        \includegraphics[width=.5\linewidth]{Deviazione standard 18_19.jpeg}
-        \includegraphics[width=.5
+        \includegraphics[width=.4\linewidth]{Deviazione standard 18_19.jpeg}
+        \includegraphics[width=.4
         \linewidth]{deviazione standard_20_23.jpeg} 
     \end{figure}
-      Consente di visualizzare la viariazione dei dati nel tempo e l'incerteza associata (margine di errore statistico).
+      Consente di visualizzare la viariazione dei dati nel tempo e l'incerteza associata (margine di errore statistico).\\
+      Comando R: \\
+      > sd <- focal (pci1 [[1]], matrix(1/9, 3, 3), fun = sd)\\
+      > sdf <- as.data.frame(sd, xy = T)\\
 \end{frame}
 
 \section{Classificazione}
@@ -132,9 +145,13 @@ Frequenza dei pixel di ogni classe:
 \end{frame}
 
 \section{Previsione NDVI per il 2024}
-\begin{frame}{Andamento di crescita della vegetazione per l'anno 2024:}
+\begin{frame}{Andamento di crescita della vegetazione per l'anno 2024 - Calcolo R }
 \centering
-\includegraphics[width = \textwidth]{Tendenza di crescita.jpeg}  
+\includegraphics[width = 0.8 \textwidth]{Codici.png}
+\end{frame}
+\begin{frame}{Andamento di crescita della vegetazione per l'anno 2024 - Grafico}
+\centering
+\includegraphics[width = 0.8 \textwidth]{Tendenza di crescita.jpeg}
 \end{frame}
 
 \section{Conclusioni}
@@ -147,9 +164,9 @@ Frequenza dei pixel di ogni classe:
 
 \begin{frame}{Conclusioni}
 \centering
-\includegraphics[width = \textwidth]{tabella classificazione.PNG} 
+\includegraphics[width = 0.8 \textwidth]{tabella classificazione.PNG} 
 \begin{itemize}
-    \item Si può ipotizzare che il continuo crescere della percentuale del suolo nudo anche dopo l'evento sia dovuto dal bostrico che attacca le piante rimaste in piedi da Vaia.
+    \item Si può ipotizzare che il continuo crescere della percentuale del suolo nudo anche dopo l'evento sia dovuto dal bostrico che attacca le piante rimaste in piedi da Vaia. 
      \item Si ipotizza che l'andamento dell'indice NDVI per l'anno 2024 sia verso l'apertura di nuovi spazi all'interno del bosco, quindi in continua perdita di bosco. 
 \end{itemize} 
 \end{frame}
