@@ -11,12 +11,11 @@
 
 \usetheme{Frankfurt}  
 \usecolortheme{orchid}
-\sloppy
 
 \title{Calamento (TN)\\
 dal 2018 al 2023}
 \author{Anna Slomp}
-%\date{July 2024}
+\date{July 2024}
 
 \begin  {document}
 \maketitle
@@ -43,7 +42,7 @@ Lo strumento utilizzato per l'analisi è R coding:
 \href{https://github.com/DM001-1/telerilevamento_23_24/blob/main/R_script_exam.R}{Vedi link GitHub}
 \end{frame}    
 
-\section{Sentinel 2 - portale di Copernicus}
+\section{Sentinel 2}
 \begin{frame}{Raccolta immagini satelitari dell'area di interesse:}
 Confronto temporale fra le immagini a colori naturali: 
 \includegraphics[width = \textwidth]{immagini_satellite.jpeg}
@@ -65,8 +64,7 @@ Comando R per impostare la banda degli infrarossi (NIR) al posto della banda del
 \end{frame}
 
 
-\section{NDVI - Normalized Difference Vegetation Inde; \\
-PCA - Principal Component Analysis}
+\section{NDVI - PCA}
 \begin{frame}{NDVI - standardizzazione dei dati}
 Indicatore utilizzato per misurare la densità e la salute della vegetazione. Viene calcolato utilizzando la luce riflessa nelle bande del rosso e dell'infrarosso.
 \begin{equation}
@@ -92,28 +90,21 @@ I valori di NDVI variano da -1 e +1: valori vicino a 1 indicano vegetazione dens
 \begin{itemize}
     \item Tecnica statistica che riassume le bande componenti un immagine, in un solo livello e seleziona i componenti principali; 
     \item Un valore maggiore di zero significa che la componente principale cattura una certa quantità di varianza dei dati originali, quindi questa componente è utile per rappresentare i dati; se fosse zero non ci sarebbe nessuna variazione dati.
-    \item Comando R per calcolare la PCA : \\
-            > sample <- sampleRandom(ndvi.dif1, 10000); \\
-            > pca <- prcomp (sample);\\
-            > summary(pca);\\
-            > pci <- predict(ndvi.dif1, pca, index = c(1:2));\\
-            > plot(pci)
+    \item Visualizzazione PCA dell'indice di vegetazione.
 \end{itemize}
 \end{frame}
 
-\begin{frame}
-Differenza di vegetazione dal 2018 fino al 20219
+\begin{frame}{Differenza di vegetazione dal 2018 fino al 2019}
 \centering
 \includegraphics[width = .8\textwidth]{PCA_NDVI_18_19.jpeg}\\
 Più il valore si sposta verso 0.6 maggiore è la perdita di vegetazione.\\
 Si evidenziano le zone più colpite.
 \end{frame}
-\begin{frame}
-Differenza di vegetazione dal 2020 fino al 2023
+\begin{frame}{Differenza di vegetazione dal 2020 fino al 2023}
 \centering
 \includegraphics[width = .8\textwidth]{PCA_NDVI_20_23.jpeg}\\
 Più il valore si sposta verso -0.6 acquisizione di vegetazione.\\
-Si evidenziano zone con recupero di vegetazione, zone stabili e sone con ulteriori perdite.
+L'analisi PCA indica che le variazioni osservate  sono statisticamente significative suggerendo un cambiamento reale nella vegetazione più tosto che flutuazioni casuali dei dati.
 \end{frame}   
 
 \begin{frame}{Deviazione standard}
@@ -123,11 +114,12 @@ Si evidenziano zone con recupero di vegetazione, zone stabili e sone con ulterio
         \includegraphics[width=.4
         \linewidth]{deviazione standard_20_23.jpeg} 
     \end{figure}
-      Consente di visualizzare la viariazione dei dati nel tempo e l'incerteza associata (margine di errore statistico), facendo una misura chiara della variazione della vegetazione.\\
+      \item Consente di visualizzare la viariazione dei dati nel tempo e l'incerteza associata: maggior variabilità, causa di eventi estremi; minor variabilità, maggior stabilità della vegetazione.\\
       Comando R: \\
       > sd <- focal (pci1 [[1]], matrix(1/9, 3, 3), fun = sd)\\
-      > sdf <- as.data.frame(sd, xy = T)\\
+      > sdf <- as.data.frame(sd, xy = T)
 \end{frame}
+
 
 \section{Classificazione}
 \begin{frame}{Classification}
@@ -158,21 +150,13 @@ Frequenza dei pixel di ogni classe:
 \includegraphics[width = 0.8 \textwidth]{Tendenza di crescita.jpeg}
 \end{frame}
 
-\section{Risultati e Conclusioni}
-\begin{frame}{Risultati}
-\begin{itemize}
-    \item L'analisi PCA indica che le variazioni osservate  sono statisticamente significative suggerendo un cambiamento reale nella vegetazione più tosto che flutuazioni casuali dei dati. 
-    \item In seguito all'evento, con una perdita di vegetazione causa il crollo di conifere \textit{Picea abies}, possiamo misurare un leggero aumento della vegetazione in alcune aree all'interno dell'ambito di studio, ma resta comunque una percentuale di perdita;
-    \item Dalla deviazione standard possiamo affermare che fra il 2018 e il 2019 abbiamo dei cambiamenti nella vegetazione, significativi perchè misurabili, sull'intera area. Causa di eventi estremi. Dal 2020 al 2023 invece si registra una minor variabilità suggerendo una maggior stabilità della vegetazione durante il periodo di studio.
-\end{itemize}
-\end{frame}
-
+\section{Conclusioni}
 \begin{frame}{Conclusioni}
 Si può ipotizzare che: 
 \begin{itemize}
-    \item il continuo diminuire della percentuale che identifica la foresta di conifere, anche dopo l'evento, sia dovuto dal bostrico; questo coleottero se presente in numero elevato può attaccare anche le piante rimaste in piedi da Vaia; 
+    \item il continuo diminuire della percentuale che identifica la foresta di conifere \textit{Picea Abies}, anche dopo l'evento, sia dovuto dal bostrico; questo coleottero se presente in numero elevato può attaccare anche le piante rimaste in piedi da Vaia; 
      \item osservando l'indice NDVI per l'anno 2024 si può vedere come questo si sposti verso valori positivi. Inoltre troviamo, in alcune aree, una certa stabilità di vegetazione. Questo potrebbe indicare una sostituzione con altri tipi di vegetazione visto la continua diminuzione della percentuale di foresta.
-     \item questi risultati evidenziano l'importanza di monitorare e gestire attentamente le risorse forestali per mitigare gli effetti fututi come l'espasione di infestanti, la variazione della biodiversità e la variazione dell'ecosistema dell'area di Calamento. 
+     \item questi risultati evidenziano l'importanza di monitorare e gestire attentamente le risorse forestali per mitigare gli effetti futuri come l'espasione di infestanti, la variazione della biodiversità e la variazione dell'ecosistema dell'area di Calamento. 
 \end{itemize} 
 \end{frame}
 
